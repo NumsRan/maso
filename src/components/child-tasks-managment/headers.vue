@@ -1,5 +1,6 @@
 <script setup>
     import { ref } from 'vue'
+    import Button from '../child-global/button.vue';
 
     const currentDate = new Date().toLocaleString('en-US', {
         dateStyle: 'long'
@@ -10,7 +11,9 @@
     <p class="current-date">{{ currentDate }}</p>
     <div>
         <p class="title">Product Roadmap</p>
-        <button>ADD TASKS</button>
+        <Button>
+            <span class="slot">ADD TASK</span>
+        </Button>
     </div>
 </template>
 
@@ -29,5 +32,9 @@
     div .title {
         font-family: 'Roboto-Bold';
         font-size: 2em;
+    }
+
+    .slot {
+        margin-left: 5px;
     }
 </style>

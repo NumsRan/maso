@@ -7,8 +7,5 @@
 </template>
 
 <style>
-	body {
-		background-color: #f2f2f2;
-		font-size: 12px;
-	}
+
 </style>
