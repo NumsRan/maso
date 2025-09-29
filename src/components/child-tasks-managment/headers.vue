@@ -2,9 +2,9 @@
     import { ref } from 'vue'
     import Button from '../child-global/button.vue';
 
-    const currentDate = new Date().toLocaleString('en-US', {
+    const currentDate = ref(new Date().toLocaleString('en-US', {
         dateStyle: 'long'
-    })
+    }))
 </script>
 
 <template>
