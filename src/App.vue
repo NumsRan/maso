@@ -1,11 +1,11 @@
 <script setup>
-
+	import TasksManagment from './components/tasks-managment.vue';
 </script>
 
 <template>
-	<h1>Maso application</h1>
+	<TasksManagment/>
 </template>
 
-<style scoped>
+<style>
 
 </style>
