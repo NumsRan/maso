@@ -1,9 +1,19 @@
 @font-face {
-    font-family: 'nexa-bold';
-    src: url('../fonts/nexa-bold.otf');
+    font-family: 'Roboto-Bold';
+    src: url('../fonts/Roboto-Bold.ttf');
 }
 
 @font-face {
-    font-family: 'nexa-light';
-    src: url('../fonts/nexa-light.otf');
+    font-family: 'Roboto-Light';
+    src: url('../fonts/Roboto-Light.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('../fonts/Roboto-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('../fonts/Roboto-Regular.ttf');
 }
