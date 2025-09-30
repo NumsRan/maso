@@ -16,6 +16,7 @@
         color: #ffffff;
         border: none;
         padding: 8px;
+        cursor: pointer;
 
         display: flex;
         align-items: center;

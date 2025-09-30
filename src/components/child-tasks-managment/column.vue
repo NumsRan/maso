@@ -1,5 +1,6 @@
 <script setup>
     import Button from '../child-global/button.vue';
+    import Task from './task.vue';
 
 
 </script>
@@ -20,16 +21,20 @@
             <span>Add a task</span>
         </div>
         <div class="column-tasks">
-
+            <Task/>
+            <Task/>
+            <Task/>
         </div>
     </div>
 </template>
 
 <style scoped>
     .column {
-        width: 200px;
+        width: 250px;
+        padding: 8px;
         height: auto;
         font-size: 1.2em;
+        margin-right: 16px;
     }
 
     .column-header, 
@@ -39,19 +44,27 @@
         align-items: center;
     }
 
-    .column-header {
+    .column-header,
+    .column-action {
         margin-bottom: 16px;
     }
 
-    .header-control span {
-        margin-right: 8px;
+    .header-control img {
+        padding-left: 8px;
+    }
+
+    .header-control img:hover {
+        cursor: pointer;
+        opacity: .8;
     }
 
     .column-action {
         display: flex;
         align-items: center;
 
+        box-shadow: #bababa 0px 2px 4px;
         background-color: #fefefe;
+        border-radius: 2px;
         padding: 8px;
     }
 
