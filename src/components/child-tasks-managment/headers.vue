@@ -8,28 +8,34 @@
 </script>
 
 <template>
-    <p class="current-date">{{ currentDate }}</p>
-    <div>
-        <p class="title">Product Roadmap</p>
-        <Button>
-            <span class="slot">ADD TASK</span>
-        </Button>
+    <div class="header">
+        <p class="header-date">{{ currentDate }}</p>
+        <div class="header-action">
+            <p class="header-title">Product Roadmap</p>
+            <Button>
+                <span class="slot">ADD TASK</span>
+            </Button>
+        </div>
     </div>
 </template>
 
 <style scoped>
-    .current-date {
-        font-family: 'Roboto-Light';
-        font-size: 1.5em;
+    .header {
         margin-bottom: 16px;
     }
 
-    div {
+    .header-date {
+        font-family: 'Roboto-Light';
+        font-size: 1.5em;
+        margin-bottom: 8px;
+    }
+
+    .header-action {
         display: flex;
         justify-content: space-between;
     }
 
-    div .title {
+    div .header-title {
         font-family: 'Roboto-Bold';
         font-size: 2em;
     }
