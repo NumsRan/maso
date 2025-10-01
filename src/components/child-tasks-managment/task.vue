@@ -62,7 +62,7 @@
     }
 
     .task-description {
-        font-family: 'Roboto-Medium';
+        font-family: 'Roboto-Regular';
         font-size: 12px;
     }
 </style>
