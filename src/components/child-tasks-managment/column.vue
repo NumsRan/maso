@@ -15,7 +15,11 @@
         {id: id++, column: 'Extrat'}
     ])
 
-    console.log(columns.value)
+    const count = ref([])
+
+    function getTasksCount(tasksCount) {
+        count.value.push(tasksCount.value)
+    }
 </script>
 
 <template>
@@ -25,7 +29,7 @@
                 <p>{{ column.column }}</p>
             </div>
             <div class="header-control">
-                <span>6</span>
+                <span>{{ count[column.id]? count[column.id][1] : 0 }}</span>
                 <img src="@/assets/icons/icon-dot.png" alt="Control">
             </div>
         </div>
@@ -34,7 +38,7 @@
             <span>Add a task</span>
         </div>
         <div class="column-tasks">
-            <Task :columnId="column.id"/>
+            <Task :columnId="column.id" @tasksCount="getTasksCount"/>
         </div>
     </div>
 </template>

@@ -8,6 +8,8 @@
         }
     })
 
+    const emits = defineEmits(['tasksCount'])
+
     let id = 0
 
     const tasks = ref([
@@ -30,13 +32,21 @@
     const currentTasks = computed(() => {
         return tasks.value.filter((task) => task.columnId === props.columnId)
     })
+
+    const tasksCount = computed(() => {
+        const count = tasks.value.filter((task) => task.columnId === props.columnId).length
+        const col = props.columnId
+        return [col, count]
+    })
+    
+    emits('tasksCount', tasksCount)
 </script>
 
 <template>
     <div v-for="task in currentTasks" :key="task.id" class="task">
         <h1 class="task-title">{{ task.title }}</h1>
         <p class="task-description">{{ task.description }}</p>
-    </div> 
+    </div>
 </template>
 
 <style scoped>
