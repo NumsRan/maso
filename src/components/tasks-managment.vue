@@ -11,12 +11,6 @@
         </section>
         <section class="data">
             <Column/>
-            <Column/>
-            <Column/>
-            <Column/>
-            <Column/>
-            <Column/>
-            <Column/>
         </section>
     </section>
 </template>

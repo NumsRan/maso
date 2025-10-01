@@ -1,15 +1,28 @@
 <script setup>
+    import { ref } from 'vue'
     import Button from '../child-global/button.vue';
     import Task from './task.vue';
 
+    let id = 0
 
+    const columns = ref([
+        {id: id++, column: 'User Stories'},
+        {id: id++, column: 'Issues & Requests'},
+        {id: id++, column: 'Product Backlog'},
+        {id: id++, column: 'To Do'},
+        {id: id++, column: 'To Test'},
+        {id: id++, column: 'Done'},
+        {id: id++, column: 'Extrat'}
+    ])
+
+    console.log(columns.value)
 </script>
 
 <template>
-    <div class="column">
+    <div v-for="column in columns" :key="column.id" class="column">
         <div class="column-header">
             <div class="header-title">
-                <p>To-Do</p>
+                <p>{{ column.column }}</p>
             </div>
             <div class="header-control">
                 <span>6</span>
@@ -21,9 +34,7 @@
             <span>Add a task</span>
         </div>
         <div class="column-tasks">
-            <Task/>
-            <Task/>
-            <Task/>
+            <Task :columnId="column.id"/>
         </div>
     </div>
 </template>

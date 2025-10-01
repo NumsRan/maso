@@ -1,8 +1,42 @@
+<script setup>
+    import { computed, ref } from 'vue'
+
+    const props = defineProps({
+        columnId: {
+            type: Number,
+            required: true
+        }
+    })
+
+    let id = 0
+
+    const tasks = ref([
+        {id: id++, columnId: 0, title: 'Training Vue.js', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 0, title: 'Training Nuxt.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 1, title: 'Training React.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 1, title: 'Training Next.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 2, title: 'Training TypeScript', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 2, title: 'Training Angular', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 5, title: 'Training PHP', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 5, title: 'Training Symfony', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 5, title: 'Training Laravel', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 6, title: 'Training Python', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 6, title: 'Training Django', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 6, title: 'Training Web Scraping', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 3, title: 'Training Javascript', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+        {id: id++, columnId: 1, title: 'Training DevOps', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
+    ])
+
+    const currentTasks = computed(() => {
+        return tasks.value.filter((task) => task.columnId === props.columnId)
+    })
+</script>
+
 <template>
-    <div class="task">
-        <h1 class="task-title">Training Vue.js</h1>
-        <p class="task-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum</p>
-    </div>
+    <div v-for="task in currentTasks" :key="task.id" class="task">
+        <h1 class="task-title">{{ task.title }}</h1>
+        <p class="task-description">{{ task.description }}</p>
+    </div> 
 </template>
 
 <style scoped>
