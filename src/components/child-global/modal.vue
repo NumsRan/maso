@@ -2,9 +2,10 @@
     import { ref } from 'vue'
     import Button from './button.vue';
     import { useColumnStore } from '@/stores/columnStore';
+    import { useTaskStore } from '@/stores/taskStore';
 
     // Signal to open Modal
-    defineProps({
+    const props = defineProps({
         showModal: {
             type: Boolean,
             default: false
@@ -41,6 +42,24 @@
             emits('closeModal')
         }
     }
+
+    // Create taks
+    const taskStore = useTaskStore()
+    const taskName = ref('')
+    const taskDescription = ref('')
+
+    function initCreateTask() {
+        if(
+            taskName.value.trim().length > 0 && 
+            taskDescription.value.trim().length > 0
+        ) {
+            taskStore.createTask(props.columnData.id, taskName.value, taskDescription.value)
+
+            taskName.value = ''
+            taskDescription.value = ''
+            emits('closeModal')
+        }
+    }
 </script>
 
 <template>
@@ -53,13 +72,23 @@
                 </p>
                 <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;"/>
             </div>
-            <form @submit.prevent="initCreateColumn" class="modal-body">
-                <div v-if="columnModal" class="modal-column-fields">
+            <form v-if="columnModal" @submit.prevent="initCreateColumn" class="modal-body">
+                <div class="modal-column-fields">
                     <input type="text" class="field" placeholder="Insert column's name..." v-model="columnName">
                 </div>
-                <div v-else class="modal-task-fields">
-                    <input type="text" class="field" placeholder="Insert task's name...">
-                    <textarea class="field description" placeholder="Add some description..."></textarea>
+                <div class="modal-footer">
+                    <Button style="background-color: #4eddcf;">
+                        <span class="btn-slot">Add</span>
+                    </Button>
+                    <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;">
+                        <span class="btn-slot">Cancel</span>
+                    </Button>
+                </div>
+            </form>
+            <form v-else @submit.prevent="initCreateTask" class="modal-body">
+                <div class="modal-task-fields">
+                    <input type="text" class="field" placeholder="Insert task's name..." v-model="taskName">
+                    <textarea class="field description" placeholder="Add some description..." v-model="taskDescription"></textarea>
                 </div>
                 <div class="modal-footer">
                     <Button style="background-color: #4eddcf;">

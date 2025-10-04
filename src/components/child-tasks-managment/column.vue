@@ -5,6 +5,7 @@
     import { useColumnStore } from '@/stores/columnStore';
     import Modal from '../child-global/modal.vue';
 
+    // Get column's data from Pinia
     const columnsStore = useColumnStore()
 
     // Control Modal state

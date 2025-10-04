@@ -1,5 +1,6 @@
 <script setup>
-    import { computed, ref } from 'vue'
+    import { useTaskStore } from '@/stores/taskStore'
+    import { computed } from 'vue'
 
     const props = defineProps({
         columnId: {
@@ -8,37 +9,20 @@
         }
     })
 
-    const emits = defineEmits(['tasksCount'])
-
-    let id = 0
-
-    const tasks = ref([
-        {id: id++, columnId: 0, title: 'Training Vue.js', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 0, title: 'Training Nuxt.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 1, title: 'Training React.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 1, title: 'Training Next.js', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 2, title: 'Training TypeScript', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 2, title: 'Training Angular', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 5, title: 'Training PHP', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 5, title: 'Training Symfony', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 5, title: 'Training Laravel', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 6, title: 'Training Python', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 6, title: 'Training Django', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 6, title: 'Training Web Scraping', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 3, title: 'Training Javascript', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-        {id: id++, columnId: 1, title: 'Training DevOps', description: 'Ipsum dolor sit amet consectetur adipisicing elit. Numquam facere corporis at ea est magni repudiandae earum'},
-    ])
+    // Get tasks's data from Pinia
+    const tasksStore = useTaskStore()
 
     const currentTasks = computed(() => {
-        return tasks.value.filter((task) => task.columnId === props.columnId)
+        return tasksStore.tasks.filter((task) => task.columnId === props.columnId)
     })
 
     const tasksCount = computed(() => {
-        const count = tasks.value.filter((task) => task.columnId === props.columnId).length
+        const count = tasksStore.tasks.filter((task) => task.columnId === props.columnId).length
         const col = props.columnId
         return [col, count]
     })
-    
+
+    const emits = defineEmits(['tasksCount'])
     emits('tasksCount', tasksCount)
 </script>
 
