@@ -20,24 +20,29 @@
 </script>
 
 <template>
-    <Modal :showModal="modalState" :columnModal="false" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
-    <div v-for="column in columnsStore.columns" :key="column.id" class="column">
-        <div class="column-header">
-            <div class="header-title">
-                <p>{{ column.title }}</p>
+    <div v-if="columnsStore.columns.length > 0">
+        <Modal :showModal="modalState" :columnModal="false" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
+        <div v-for="column in columnsStore.columns" :key="column.id" class="column">
+            <div class="column-header">
+                <div class="header-title">
+                    <p>{{ column.title }}</p>
+                </div>
+                <div class="header-control">
+                    <span>{{ count[column.id]? count[column.id][1] : 0 }}</span>
+                    <img src="@/assets/icons/icon-dot.png" alt="Control">
+                </div>
             </div>
-            <div class="header-control">
-                <span>{{ count[column.id]? count[column.id][1] : 0 }}</span>
-                <img src="@/assets/icons/icon-dot.png" alt="Control">
+            <div class="column-action">
+                <Button style="background-color: #4eddcf;" @click="modalState = true; columnData = column;"/>
+                <span>Add a task</span>
+            </div>
+            <div class="column-tasks">
+                <Task :columnId="column.id" @tasksCount="getTasksCount"/>
             </div>
         </div>
-        <div class="column-action">
-            <Button style="background-color: #4eddcf;" @click="modalState = true; columnData = column;"/>
-            <span>Add a task</span>
-        </div>
-        <div class="column-tasks">
-            <Task :columnId="column.id" @tasksCount="getTasksCount"/>
-        </div>
+    </div>
+    <div v-else class="welcome-text">
+        <p>Start using app by creating column...</p>
     </div>
 </template>
 
@@ -83,5 +88,14 @@
 
     .column-action span {
         margin-left: 8px;
+    }
+
+    .welcome-text {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .welcome-text p {
+        text-align: center;
     }
 </style>
