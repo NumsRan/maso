@@ -22,17 +22,17 @@
                 <p>Add column</p>
                 <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;"/>
             </div>
-            <div class="modal-body">
+            <form class="modal-body">
                 <input type="text" placeholder="Insert column's name...">
-            </div>
-            <div class="modal-footer">
-                <Button style="background-color: #4eddcf;">
-                    <span class="btn-slot">Add</span>
-                </Button>
-                <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;">
-                    <span class="btn-slot">Cancel</span>
-                </Button>
-            </div>
+                <div class="modal-footer">
+                    <Button style="background-color: #4eddcf;">
+                        <span class="btn-slot">Add</span>
+                    </Button>
+                    <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;">
+                        <span class="btn-slot">Cancel</span>
+                    </Button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -61,9 +61,12 @@
     }
 
     .modal-header,
-    .modal-body,
-    .modal-footer {
+    .modal-body {
         padding: 8px;
+    }
+
+    .modal-footer {
+        margin-top: 16px;
     }
 
     .modal-header p {
