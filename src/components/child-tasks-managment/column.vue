@@ -2,18 +2,9 @@
     import { ref } from 'vue'
     import Button from '../child-global/button.vue';
     import Task from './task.vue';
+    import { useColumnStore } from '@/stores/columnStore';
 
-    let id = 0
-
-    const columns = ref([
-        {id: id++, column: 'User Stories'},
-        {id: id++, column: 'Issues & Requests'},
-        {id: id++, column: 'Product Backlog'},
-        {id: id++, column: 'To Do'},
-        {id: id++, column: 'To Test'},
-        {id: id++, column: 'Done'},
-        {id: id++, column: 'Extrat'}
-    ])
+    const columnsStore = useColumnStore()
 
     const count = ref([])
 
@@ -23,10 +14,10 @@
 </script>
 
 <template>
-    <div v-for="column in columns" :key="column.id" class="column">
+    <div v-for="column in columnsStore.columns" :key="column.id" class="column">
         <div class="column-header">
             <div class="header-title">
-                <p>{{ column.column }}</p>
+                <p>{{ column.title }}</p>
             </div>
             <div class="header-control">
                 <span>{{ count[column.id]? count[column.id][1] : 0 }}</span>

@@ -1,6 +1,9 @@
 <script setup>
+    import { ref } from 'vue'
     import Button from './button.vue';
+    import { useColumnStore } from '@/stores/columnStore';
 
+    // Signal to open Modal
     defineProps({
         showModal: {
             type: Boolean,
@@ -8,10 +11,22 @@
         }
     })
 
+    // Signal to close Modal
     const emits = defineEmits(['closeModal'])
     const closeModal = () => {
         emits('closeModal')
-    } 
+    }
+
+    // Create column
+    const columnsStore = useColumnStore()
+    const columnName = ref('')
+
+    function initCreateColumn() {
+        columnsStore.createColumn(columnName.value)
+
+        columnName.value = ''
+        emits('closeModal')
+    }
 </script>
 
 <template>
@@ -21,8 +36,8 @@
                 <p>Add column</p>
                 <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;"/>
             </div>
-            <form class="modal-body">
-                <input type="text" placeholder="Insert column's name...">
+            <form @submit.prevent="initCreateColumn" class="modal-body">
+                <input type="text" placeholder="Insert column's name..." v-model="columnName">
                 <div class="modal-footer">
                     <Button style="background-color: #4eddcf;">
                         <span class="btn-slot">Add</span>
