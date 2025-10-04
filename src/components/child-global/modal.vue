@@ -11,8 +11,7 @@
     const emits = defineEmits(['closeModal'])
     const closeModal = () => {
         emits('closeModal')
-    }
-
+    } 
 </script>
 
 <template>
