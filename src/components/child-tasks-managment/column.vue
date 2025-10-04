@@ -88,12 +88,12 @@
         margin-left: 8px;
     }
 
-    /* .welcome-text {
+    .welcome-text {
         width: 100%;
         padding: 8px;
     }
 
     .welcome-text p {
         text-align: center;
-    } */
+    }
 </style>
