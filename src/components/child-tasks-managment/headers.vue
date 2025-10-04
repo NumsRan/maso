@@ -1,6 +1,7 @@
 <script setup>
     import { ref } from 'vue'
     import Button from '../child-global/button.vue';
+    import Modal from '../child-global/modal.vue';
 
     const currentDate = ref(new Date().toLocaleString('en-US', {
         dateStyle: 'long'
@@ -8,12 +9,13 @@
 </script>
 
 <template>
+    <Modal/>
     <div class="header">
         <p class="header-date">{{ currentDate }}</p>
         <div class="header-action">
             <p class="header-title">Product Roadmap</p>
             <Button>
-                <span class="slot">ADD TASK</span>
+                <span class="btn-slot">ADD TASK</span>
             </Button>
         </div>
     </div>
@@ -38,9 +40,5 @@
     div .header-title {
         font-family: 'Roboto-Bold';
         font-size: 2em;
-    }
-
-    .slot {
-        margin-left: 5px;
     }
 </style>

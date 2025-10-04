@@ -15,9 +15,17 @@
     </section>
 </template>
 
-<style scoped>
+<style>
+    .head {
+        padding: 8px;
+    }
+
     .data {
         display: flex;
         height: calc(100vh - 100px);
+    }
+
+    .btn-slot {
+        margin-left: 5px;
     }
 </style>
