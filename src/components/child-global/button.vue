@@ -1,10 +1,17 @@
 <script setup>
+    const props = defineProps({
+        imgTarget: {
+            type: String,
+            default: 'icon-add'
+        }
+    })
 
+    const target = "/src/assets/icons/" + props.imgTarget + ".png"
 </script>
 
 <template>
     <button>
-        <img src="@/assets/icons/icon-add.png" alt="Add">
+        <img :src="target" alt="Add">
         <slot></slot>
     </button>
 </template>
@@ -24,5 +31,9 @@
 
     button:hover {
         opacity: .8;
+    }
+
+    img {
+        width:18px
     }
 </style>

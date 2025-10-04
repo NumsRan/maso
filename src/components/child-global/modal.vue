@@ -8,7 +8,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <p>Add column</p>
-                <Button/>
+                <Button imgTarget="icon-close"/>
             </div>
             <div class="modal-body">
                 <input type="text" placeholder="Insert column's name...">
@@ -17,7 +17,7 @@
                 <Button>
                     <span class="btn-slot">Add</span>
                 </Button>
-                <Button>
+                <Button imgTarget="icon-delete">
                     <span class="btn-slot">Delete</span>
                 </Button>
             </div>
