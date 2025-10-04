@@ -20,17 +20,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <p>Add column</p>
-                <Button @click="closeModal" imgTarget="icon-close"/>
+                <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;"/>
             </div>
             <div class="modal-body">
                 <input type="text" placeholder="Insert column's name...">
             </div>
             <div class="modal-footer">
-                <Button>
+                <Button style="background-color: #4eddcf;">
                     <span class="btn-slot">Add</span>
                 </Button>
-                <Button imgTarget="icon-delete">
-                    <span class="btn-slot">Delete</span>
+                <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;">
+                    <span class="btn-slot">Cancel</span>
                 </Button>
             </div>
         </div>

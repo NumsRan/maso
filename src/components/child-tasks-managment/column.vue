@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="column-action">
-            <Button style="background-color: #78fff2;"/>
+            <Button style="background-color: #4eddcf;"/>
             <span>Add a task</span>
         </div>
         <div class="column-tasks">

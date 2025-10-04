@@ -60,7 +60,7 @@
     }
 
     .task:hover {
-        border: .5px  solid #78fff2;
+        border: .5px  solid #4eddcf;
         box-shadow: none;
         cursor: pointer;
     }
