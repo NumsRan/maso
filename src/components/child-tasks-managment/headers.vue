@@ -6,15 +6,17 @@
     const currentDate = ref(new Date().toLocaleString('en-US', {
         dateStyle: 'long'
     }))
+
+    const modalState = ref(false)
 </script>
 
 <template>
-    <Modal/>
+    <Modal :showModal="modalState" @closeModal="modalState = false"/>
     <div class="header">
         <p class="header-date">{{ currentDate }}</p>
         <div class="header-action">
             <p class="header-title">Product Roadmap</p>
-            <Button>
+            <Button @click="modalState = true">
                 <span class="btn-slot">ADD TASK</span>
             </Button>
         </div>

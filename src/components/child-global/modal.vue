@@ -1,14 +1,26 @@
 <script setup>
     import Button from './button.vue';
 
+    defineProps({
+        showModal: {
+            type: Boolean,
+            default: false
+        }
+    })
+
+    const emits = defineEmits(['closeModal'])
+    const closeModal = () => {
+        emits('closeModal')
+    }
+
 </script>
 
 <template>
-    <div class="modal-container">
+    <div v-if="showModal" class="modal-container">
         <div class="modal-content">
             <div class="modal-header">
                 <p>Add column</p>
-                <Button imgTarget="icon-close"/>
+                <Button @click="closeModal" imgTarget="icon-close"/>
             </div>
             <div class="modal-body">
                 <input type="text" placeholder="Insert column's name...">
