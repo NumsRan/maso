@@ -11,7 +11,7 @@
 </script>
 
 <template>
-    <Modal :showModal="modalState" @closeModal="modalState = false"/>
+    <Modal :showModal="modalState" :columnModal="true" titleModal="Add column" @closeModal="modalState = false"/>
     <div class="header">
         <p class="header-date">{{ currentDate }}</p>
         <div class="header-action">

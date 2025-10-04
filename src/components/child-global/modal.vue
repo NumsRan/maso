@@ -8,6 +8,18 @@
         showModal: {
             type: Boolean,
             default: false
+        },
+        columnModal: {
+            type: Boolean,
+            required: true
+        },
+        columnData: {
+            type: Object,
+            default: {}
+        },
+        titleModal: {
+            type: String,
+            required: true
         }
     })
 
@@ -22,10 +34,12 @@
     const columnName = ref('')
 
     function initCreateColumn() {
-        columnsStore.createColumn(columnName.value)
-
-        columnName.value = ''
-        emits('closeModal')
+        if(columnName.value.trim().length > 0) {
+            columnsStore.createColumn(columnName.value)
+    
+            columnName.value = ''
+            emits('closeModal')
+        }
     }
 </script>
 
@@ -33,11 +47,20 @@
     <div v-if="showModal" class="modal-container">
         <div class="modal-content">
             <div class="modal-header">
-                <p>Add column</p>
+                <p>
+                    {{ titleModal }}
+                    <span v-if="!columnModal"> on {{ columnData.title }}</span>
+                </p>
                 <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;"/>
             </div>
             <form @submit.prevent="initCreateColumn" class="modal-body">
-                <input type="text" placeholder="Insert column's name..." v-model="columnName">
+                <div v-if="columnModal" class="modal-column-fields">
+                    <input type="text" class="field" placeholder="Insert column's name..." v-model="columnName">
+                </div>
+                <div v-else class="modal-task-fields">
+                    <input type="text" class="field" placeholder="Insert task's name...">
+                    <textarea class="field description" placeholder="Add some description..."></textarea>
+                </div>
                 <div class="modal-footer">
                     <Button style="background-color: #4eddcf;">
                         <span class="btn-slot">Add</span>
@@ -55,7 +78,7 @@
     .modal-container {
         width: 100vw;
         height: 100vh;
-        background-color: #1d1f213d;
+        background-color: #00040a9c;
         z-index: 999;
         position: absolute;
         top: 0;
@@ -80,12 +103,16 @@
     }
 
     .modal-footer {
-        margin-top: 16px;
+        margin-top: 8px;
     }
 
     .modal-header p {
         font-family: 'Roboto-Bold';
         font-size: 1.5em;
+    }
+
+    .modal-header p span {
+        font-family: 'Roboto-Light';
     }
 
     .modal-header,
@@ -95,15 +122,21 @@
         align-items: center;
     }
 
-    .modal-body input {
+    .modal-body .field {
         width: 100%;
         height: 40px;
         padding: 0 8px;
+        margin-bottom: 8px;
         border: 1px solid #1d1f21;
     }
 
-    .modal-body input:hover {
+    .modal-body .field:hover {
         border: .5px  solid #78fff2;
+    }
+
+    .modal-body .field.description {
+        padding: 8px;
+        height: 80px;
     }
 
     .modal-footer {

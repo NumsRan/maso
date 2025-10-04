@@ -3,8 +3,13 @@
     import Button from '../child-global/button.vue';
     import Task from './task.vue';
     import { useColumnStore } from '@/stores/columnStore';
+    import Modal from '../child-global/modal.vue';
 
     const columnsStore = useColumnStore()
+
+    // Control Modal state
+    const modalState = ref(false)
+    const columnData = ref({})
 
     const count = ref([])
 
@@ -14,6 +19,7 @@
 </script>
 
 <template>
+    <Modal :showModal="modalState" :columnModal="false" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
     <div v-for="column in columnsStore.columns" :key="column.id" class="column">
         <div class="column-header">
             <div class="header-title">
@@ -25,7 +31,7 @@
             </div>
         </div>
         <div class="column-action">
-            <Button style="background-color: #4eddcf;"/>
+            <Button style="background-color: #4eddcf;" @click="modalState = true; columnData = column;"/>
             <span>Add a task</span>
         </div>
         <div class="column-tasks">
