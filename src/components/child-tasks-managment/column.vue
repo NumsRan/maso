@@ -3,7 +3,7 @@
     import Button from '../child-global/button.vue';
     import Task from './task.vue';
     import { useColumnStore } from '@/stores/columnStore';
-    import Modal from '../child-global/modal.vue';
+    import TaskModal from '../child-global/modal/taskModal.vue';
 
     // Get column's data from Pinia
     const columnsStore = useColumnStore()
@@ -14,7 +14,7 @@
 </script>
 
 <template>
-    <Modal :showModal="modalState" :columnModal="false" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
+    <TaskModal :showModal="modalState" :showTaskModal="true" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
     <div v-if="columnsStore.columns.length > 0" v-for="column in columnsStore.columns" :key="column.id" class="column">
         <div class="column-header">
             <div class="header-title">

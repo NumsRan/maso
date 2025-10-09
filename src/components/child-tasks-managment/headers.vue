@@ -1,7 +1,7 @@
 <script setup>
     import { ref } from 'vue'
     import Button from '../child-global/button.vue';
-    import Modal from '../child-global/modal.vue';
+    import ColumnModal from '../child-global/modal/columnModal.vue';
 
     const currentDate = ref(new Date().toLocaleString('en-US', {
         dateStyle: 'long'
@@ -11,7 +11,7 @@
 </script>
 
 <template>
-    <Modal :showModal="modalState" :columnModal="true" titleModal="Add column" @closeModal="modalState = false"/>
+    <ColumnModal :showModal="modalState" :showColumnModal="true" titleModal="Add column" @closeModal="modalState = false"/>
     <div class="header">
         <p class="header-date">{{ currentDate }}</p>
         <div class="header-action">
