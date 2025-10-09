@@ -15,15 +15,6 @@
     const currentTasks = computed(() => {
         return tasksStore.tasks.filter((task) => task.columnId === props.columnId)
     })
-
-    const tasksCount = computed(() => {
-        const count = tasksStore.tasks.filter((task) => task.columnId === props.columnId).length
-        const col = props.columnId
-        return [col, count]
-    })
-
-    const emits = defineEmits(['tasksCount'])
-    emits('tasksCount', tasksCount)
 </script>
 
 <template>

@@ -11,12 +11,6 @@
     // Control Modal state
     const modalState = ref(false)
     const columnData = ref({})
-
-    const count = ref([])
-
-    function getTasksCount(tasksCount) {
-        count.value.push(tasksCount.value)
-    }
 </script>
 
 <template>
@@ -27,7 +21,7 @@
                 <p>{{ column.title }}</p>
             </div>
             <div class="header-control">
-                <span>{{ count[column.id]? count[column.id][1] : 0 }}</span>
+                <span>{{ column.tasksCount }}</span>
                 <img src="@/assets/icons/icon-dot.png" alt="Control">
             </div>
         </div>
@@ -36,7 +30,7 @@
             <span>Add a task</span>
         </div>
         <div class="column-tasks">
-            <Task :columnId="column.id" @tasksCount="getTasksCount"/>
+            <Task :columnId="column.id"/>
         </div>
     </div>
     <div v-else class="welcome-text">

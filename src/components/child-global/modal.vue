@@ -55,6 +55,17 @@
         ) {
             taskStore.createTask(props.columnData.id, taskName.value, taskDescription.value)
 
+            /**
+             * UPDATE column's data
+             * Pinia provide a MutableReactiveHandler so we can directly apply changes on columns's properties here
+             */
+            const columns = columnsStore.columns
+            columns.forEach((column) => {
+                if(column.id === props.columnData.id) {
+                    column.tasksCount++
+                }
+            })
+
             taskName.value = ''
             taskDescription.value = ''
             emits('closeModal')
