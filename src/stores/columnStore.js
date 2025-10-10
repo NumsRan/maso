@@ -10,5 +10,10 @@ export const useColumnStore = defineStore('columnStore', () => {
         columns.value.push({id: id++, title: columnName, tasksCount: 0})
     }
 
-    return { columns, createColumn }
+    const deleteColumn = (columnId) => {
+        // In a real use case, I must delete all tasks linked to this column before deleting the column itself
+        columns.value = columns.value.filter(column => column.id !== columnId)
+    }
+
+    return { columns, createColumn, deleteColumn }
 })

@@ -80,6 +80,13 @@
 
         }
     }
+
+    // DELETE COLUMN
+    function initDeleteColumn(id) {
+        if(id !== '') {
+            columnsStore.deleteColumn(id)
+        }
+    }
 </script>
 
 <template>
@@ -112,7 +119,7 @@
                     <Button imgTarget="icon-check" style="background-color: #4eddcf;">
                         <span class="btn-slot">Update</span>
                     </Button>
-                    <Button imgTarget="icon-delete" style="background-color: #e23b3b;">
+                    <Button @click="initDeleteColumn(columnData.id)" imgTarget="icon-delete" style="background-color: #e23b3b;">
                         <span class="btn-slot">Delete</span>
                     </Button>
                 </div>
