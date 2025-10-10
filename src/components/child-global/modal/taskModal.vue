@@ -105,9 +105,17 @@
                     task.description = newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...'
     
                 }
+
+                emits('closeModal')
             })
 
-            emits('closeModal')
+        }
+    }
+
+    // DELETE TASK
+    function initDeleteTask(id) {
+        if(id !== '') {
+            taskStore.deleteTask(id)
         }
     }
 </script>
@@ -147,8 +155,8 @@
                     <Button style="background-color: #4eddcf;" imgTarget="icon-check">
                         <span class="btn-slot">Update</span>
                     </Button>
-                    <Button @click="closeModal" imgTarget="icon-close" style="background-color: #ec6666;">
-                        <span class="btn-slot">Cancel</span>
+                    <Button @click="initDeleteTask(taskData.id)" imgTarget="icon-delete" style="background-color: #e23b3b;">
+                        <span class="btn-slot">Delete</span>
                     </Button>
                 </div>
             </form>

@@ -25,9 +25,12 @@
 
 <template>
     <TaskModal :showModal="modalState" :showTaskModal="false" :taskData="taskData" titleModal="Update task" @closeModal="modalState = false"/>
-    <div v-for="task in currentTasks" :key="task.id" class="task" @click="modalState = true; taskData = task">
+    <div v-if="currentTasks.length > 0" v-for="task in currentTasks" :key="task.id" class="task" @click="modalState = true; taskData = task">
         <h1 class="task-title">{{ task.title }}</h1>
         <p class="task-description">{{ task.description }}</p>
+    </div>
+    <div v-else class="notification-text">
+        <p>No task created...</p>
     </div>
 </template>
 

@@ -33,7 +33,7 @@
             <Task :columnId="column.id"/>
         </div>
     </div>
-    <div v-else class="welcome-text">
+    <div v-else class="notification-text">
         <p>Start using app by creating column...</p>
     </div>
 </template>
@@ -82,12 +82,12 @@
         margin-left: 8px;
     }
 
-    .welcome-text {
+    .notification-text {
         width: 100%;
         padding: 8px;
     }
 
-    .welcome-text p {
+    .notification-text p {
         text-align: center;
     }
 </style>
