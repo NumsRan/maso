@@ -91,24 +91,26 @@
         newTaskDescription.value = e.target.value
     }
 
-    function initUpdateTask() {
+    function initUpdateTask(id) {
         if(
             newTaskTitle.value.trim().length > 0
         ) {
+            taskStore.updateTask(id, newTaskTitle.value, newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...')
+                
+            emits('closeModal')
             /**
              * UPDATE task's data
              * Pinia provide a MutableReactiveHandler so we can directly apply changes on task's properties here
              */
-            tasks.forEach((task) => {
-                if(task.id === props.taskData.id) {
-                    task.title = newTaskTitle.value
-                    task.description = newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...'
+            // tasks.forEach((task) => {
+            //     if(task.id === props.taskData.id) {
+            //         task.title = newTaskTitle.value
+            //         task.description = newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...'
     
-                }
+            //     }
 
-                emits('closeModal')
-            })
-
+            //     emits('closeModal')
+            // })
         }
     }
 
@@ -146,7 +148,7 @@
                     </Button>
                 </div>
             </form>
-            <form v-else @submit.prevent="initUpdateTask" class="modal-body">
+            <form v-else @submit.prevent="initUpdateTask(taskData.id)" class="modal-body">
                 <div class="modal-task-fields">
                     <input type="text" class="field" placeholder="Insert task's name..." @input="getTaskTitle" :value="taskData.title">
                     <textarea class="field description" placeholder="Add some description..." @input="getTaskDescription" :value="taskData.description"></textarea>

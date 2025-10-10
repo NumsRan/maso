@@ -62,22 +62,13 @@
         newColumnTitle.value = e.target.value
     }
 
-    function initUpdateColumn() {
+    function initUpdateColumn(id) {
         if(
             newColumnTitle.value.trim().length > 0
         ) {
-            /**
-             * UPDATE column's data
-             * Pinia provide a MutableReactiveHandler so we can directly apply changes on column's property here
-             */
-            columns.forEach((column) => {
-                if(column.id === props.columnData.id) {
-                    column.title = newColumnTitle.value
-                }
+            columnsStore.updateColumn(id, newColumnTitle.value)
 
-                emits('closeModal')
-            })
-
+            emits('closeModal')
         }
     }
 
@@ -86,6 +77,8 @@
         if(id !== '') {
             columnsStore.deleteColumn(id)
         }
+
+        emits('closeModal')
     }
 </script>
 
@@ -111,7 +104,7 @@
                     </Button>
                 </div>
             </form>
-            <form v-else @submit.prevent="initUpdateColumn" class="modal-body">
+            <form v-else @submit.prevent="initUpdateColumn(columnData.id)" class="modal-body">
                 <div class="modal-column-fields">
                     <input type="text" class="field" placeholder="Insert column's name..." @input="getColumnTitle" :value="columnData.title">
                 </div>

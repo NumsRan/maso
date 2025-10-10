@@ -10,9 +10,18 @@ export const useTaskStore = defineStore('taskStore', () => {
         tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
     }
 
+    const updateTask = (taskId, newTaskName, newTaskDescription) => {
+        tasks.value.forEach((task) => {
+            if(task.id === taskId) {
+                task.title = newTaskName
+                task.description = newTaskDescription
+            }
+        })
+    }
+
     const deleteTask = (taskId) => {
         tasks.value = tasks.value.filter(task => task.id !== taskId)
     }
 
-    return { tasks, createTask, deleteTask }
+    return { tasks, createTask, updateTask, deleteTask }
 })
