@@ -1,7 +1,7 @@
 <script setup>
     import { ref } from 'vue'
-    import Button from '../child-global/button.vue';
-    import ColumnModal from '../child-global/modal/columnModal.vue';
+    import Button from '@/components/child-global/button.vue';
+    import ColumnModal from '@/components/child-global/modal/columnModal.vue';
 
     const currentDate = ref(new Date().toLocaleString('en-US', {
         dateStyle: 'long'

@@ -1,9 +1,9 @@
 <script setup>
     import { ref } from 'vue'
-    import Button from '../child-global/button.vue';
-    import Task from './task.vue';
+    import Button from '@/components/child-global/button.vue';
+    import Task from '@/components/child-tasks-managment/task.vue';
     import { useColumnStore } from '@/stores/columnStore';
-    import TaskModal from '../child-global/modal/taskModal.vue';
+    import TaskModal from '@/components/child-global/modal/taskModal.vue';
 
     // Get column's data from Pinia
     const columnsStore = useColumnStore()

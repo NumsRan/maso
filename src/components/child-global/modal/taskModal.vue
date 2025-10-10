@@ -1,10 +1,11 @@
 <script setup>
     import { ref } from 'vue'
-    import Button from '../button.vue';
+    import Button from '@/components/child-global/button.vue';
     import { useColumnStore } from '@/stores/columnStore';
     import { useTaskStore } from '@/stores/taskStore';
+    import TaskModal from '@/components/child-global/modal/taskModal.vue'
 
-    // Signal to open Modal
+    // Signal to open Modal and other data that the Modal needs
     const props = defineProps({
         showModal: {
             type: Boolean,

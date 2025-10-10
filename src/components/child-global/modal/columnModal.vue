@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from 'vue'
-    import Button from '../button.vue';
+    import Button from '@/components/child-global/button.vue';
     import { useColumnStore } from '@/stores/columnStore';
 
     // Signal to open Modal

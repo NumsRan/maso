@@ -1,6 +1,6 @@
 <script setup>
-    import { useTaskStore } from '@/stores/taskStore'
     import { computed } from 'vue'
+    import { useTaskStore } from '@/stores/taskStore'
 
     const props = defineProps({
         columnId: {
