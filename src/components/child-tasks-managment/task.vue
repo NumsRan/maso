@@ -1,6 +1,8 @@
 <script setup>
+    import { ref } from 'vue'
     import { computed } from 'vue'
     import { useTaskStore } from '@/stores/taskStore'
+    import TaskModal from '@/components/child-global/modal/taskModal.vue'
 
     const props = defineProps({
         columnId: {
@@ -15,10 +17,15 @@
     const currentTasks = computed(() => {
         return tasksStore.tasks.filter((task) => task.columnId === props.columnId)
     })
+
+    // Control Modal state
+    const modalState = ref(false)
+    const taskData = ref({})
 </script>
 
 <template>
-    <div v-for="task in currentTasks" :key="task.id" class="task">
+    <TaskModal :showModal="modalState" :showTaskModal="false" :taskData="taskData" titleModal="Update task" @closeModal="modalState = false"/>
+    <div v-for="task in currentTasks" :key="task.id" class="task" @click="modalState = true; taskData = task">
         <h1 class="task-title">{{ task.title }}</h1>
         <p class="task-description">{{ task.description }}</p>
     </div>

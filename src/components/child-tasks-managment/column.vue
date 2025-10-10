@@ -14,7 +14,7 @@
 </script>
 
 <template>
-    <TaskModal :showModal="modalState" :showTaskModal="true" :columnData="columnData" titleModal="Add a task" @closeModal="modalState = false"/>
+    <TaskModal :showModal="modalState" :showTaskModal="true" :columnData="columnData" titleModal="Create a task" @closeModal="modalState = false"/>
     <div v-if="columnsStore.columns.length > 0" v-for="column in columnsStore.columns" :key="column.id" class="column">
         <div class="column-header">
             <div class="header-title">
