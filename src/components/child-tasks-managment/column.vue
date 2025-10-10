@@ -4,16 +4,19 @@
     import Task from '@/components/child-tasks-managment/task.vue';
     import { useColumnStore } from '@/stores/columnStore';
     import TaskModal from '@/components/child-global/modal/taskModal.vue';
+    import ColumnModal from '@/components/child-global/modal/columnModal.vue';
 
     // Get column's data from Pinia
     const columnsStore = useColumnStore()
 
     // Control Modal state
     const modalState = ref(false)
+    const columnModalState = ref(false)
     const columnData = ref({})
 </script>
 
 <template>
+    <ColumnModal :showModal="columnModalState" :showColumnModal="false" :columnData="columnData" titleModal="Update column" @closeModal="columnModalState = false"/>
     <TaskModal :showModal="modalState" :showTaskModal="true" :columnData="columnData" titleModal="Create a task" @closeModal="modalState = false"/>
     <div v-if="columnsStore.columns.length > 0" v-for="column in columnsStore.columns" :key="column.id" class="column">
         <div class="column-header">
@@ -22,7 +25,9 @@
             </div>
             <div class="header-control">
                 <span>{{ column.tasksCount }}</span>
-                <img src="@/assets/icons/icon-dot.png" alt="Control">
+                <a @click.prevent="columnModalState = true; columnData = column">
+                    <img src="@/assets/icons/icon-dot.png" alt="Control">
+                </a>
             </div>
         </div>
         <div class="column-action">
@@ -48,10 +53,12 @@
     }
 
     .column-header, 
-    .header-control {
+    .header-control,
+    .header-control a {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        align-content: center;
     }
 
     .column-header,
@@ -59,11 +66,11 @@
         margin-bottom: 16px;
     }
 
-    .header-control img {
+    .header-control a {
         padding-left: 8px;
     }
 
-    .header-control img:hover {
+    .header-control a:hover {
         cursor: pointer;
         opacity: .8;
     }

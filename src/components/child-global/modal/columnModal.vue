@@ -1,9 +1,9 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, watch } from 'vue'
     import Button from '@/components/child-global/button.vue';
     import { useColumnStore } from '@/stores/columnStore';
 
-    // Signal to open Modal
+    // SIGNAL TO OPEN MODAL
     const props = defineProps({
         showModal: {
             type: Boolean,
@@ -13,19 +13,23 @@
             type: Boolean,
             required: true
         },
+        columnData: {
+            type: Object,
+            defaut: {}
+        },
         titleModal: {
             type: String,
             required: true
         }
     })
 
-    // Signal to close Modal
+    // SIGNAL TO CLOSE MODAL
     const emits = defineEmits(['closeModal'])
     const closeModal = () => {
         emits('closeModal')
     }
 
-    // Create column
+    // CREATE COLUMN
     const columnsStore = useColumnStore()
     const columnName = ref('')
 
@@ -35,6 +39,45 @@
     
             columnName.value = ''
             emits('closeModal')
+        }
+    }
+
+    // UPDATE COLUMN
+    const newColumnTitle = ref('')
+
+    // Get column's data store
+    const columns = columnsStore.columns
+
+    // Initialise fields's value with the data getted by the props columnData
+    watch(
+        () => props.columnData,
+        (newValue) => {
+            newColumnTitle.value = newValue?.title || ''
+        },
+        { immediate: true }
+    )
+
+    // Update fields's value on input event
+    function getColumnTitle(e) {
+        newColumnTitle.value = e.target.value
+    }
+
+    function initUpdateColumn() {
+        if(
+            newColumnTitle.value.trim().length > 0
+        ) {
+            /**
+             * UPDATE column's data
+             * Pinia provide a MutableReactiveHandler so we can directly apply changes on column's property here
+             */
+            columns.forEach((column) => {
+                if(column.id === props.columnData.id) {
+                    column.title = newColumnTitle.value
+                }
+
+                emits('closeModal')
+            })
+
         }
     }
 </script>
@@ -61,8 +104,18 @@
                     </Button>
                 </div>
             </form>
-            <form v-else class="modal-body">
-                <h1>Edit column</h1>
+            <form v-else @submit.prevent="initUpdateColumn" class="modal-body">
+                <div class="modal-column-fields">
+                    <input type="text" class="field" placeholder="Insert column's name..." @input="getColumnTitle" :value="columnData.title">
+                </div>
+                <div class="modal-footer">
+                    <Button imgTarget="icon-check" style="background-color: #4eddcf;">
+                        <span class="btn-slot">Update</span>
+                    </Button>
+                    <Button imgTarget="icon-delete" style="background-color: #e23b3b;">
+                        <span class="btn-slot">Delete</span>
+                    </Button>
+                </div>
             </form>
         </div>
     </div>
