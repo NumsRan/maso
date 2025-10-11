@@ -93,24 +93,12 @@
 
     function initUpdateTask(id) {
         if(
+            id !== '' &&
             newTaskTitle.value.trim().length > 0
         ) {
             taskStore.updateTask(id, newTaskTitle.value, newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...')
                 
             emits('closeModal')
-            /**
-             * UPDATE task's data
-             * Pinia provide a MutableReactiveHandler so we can directly apply changes on task's properties here
-             */
-            // tasks.forEach((task) => {
-            //     if(task.id === props.taskData.id) {
-            //         task.title = newTaskTitle.value
-            //         task.description = newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...'
-    
-            //     }
-
-            //     emits('closeModal')
-            // })
         }
     }
 
@@ -118,6 +106,26 @@
     function initDeleteTask(id) {
         if(id !== '') {
             taskStore.deleteTask(id)
+
+            emits('closeModal')
+        }
+    }
+
+    // MOVE TASK TO THE NEXT STEP
+    function initNextStepTask(id) {
+        if(id !== '') {
+            taskStore.nextStepTask(id)
+
+            emits('closeModal')
+        }
+    }
+
+    // MOVE TASK TO THE PREVIOUS STEP
+    function initPreviousStepTask(id) {
+        if(id !== '') {
+            taskStore.prevStepTask(id)
+
+            emits('closeModal')
         }
     }
 </script>
@@ -152,6 +160,10 @@
                 <div class="modal-task-fields">
                     <input type="text" class="field" placeholder="Insert task's name..." @input="getTaskTitle" :value="taskData.title">
                     <textarea class="field description" placeholder="Add some description..." @input="getTaskDescription" :value="taskData.description"></textarea>
+                </div>
+                <div class="modal-control modal-footer">
+                    <Button @click="initPreviousStepTask(taskData.id)" style="background-color: #fefefe;" imgTarget="icon-prev" title="Previous step"/>
+                    <Button @click="initNextStepTask(taskData.id)" style="background-color: #fefefe;" imgTarget="icon-next" title="Next step"/>
                 </div>
                 <div class="modal-footer">
                     <Button style="background-color: #4eddcf;" imgTarget="icon-check">

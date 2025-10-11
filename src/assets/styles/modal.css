@@ -62,6 +62,10 @@
     height: 80px;
 }
 
+.modal-control {
+    margin-bottom: 16px;
+}
+
 .modal-footer {
     justify-content: end;
 }

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useColumnStore } from '@/stores/columnStore'
 
 export const useTaskStore = defineStore('taskStore', () => {
     let id = 0
@@ -22,6 +23,36 @@ export const useTaskStore = defineStore('taskStore', () => {
     const deleteTask = (taskId) => {
         tasks.value = tasks.value.filter(task => task.id !== taskId)
     }
+    
+    const columnStore = useColumnStore()
+    
+    const nextStepTask = (taskId) => {
+        tasks.value.forEach((task) => {
+            if(task.id === taskId) {
+                const nextColumnId = task.columnId + 1
+                const columns = columnStore.columns
+                columns.forEach((column) => {
+                    if(column.id === nextColumnId) {
+                        task.columnId = nextColumnId
+                    }
+                })
+            }
+        })
+    }
+    
+    const prevStepTask = (taskId) => {
+        tasks.value.forEach((task) => {
+            if(task.id === taskId) {
+                const nextColumnId = task.columnId - 1
+                const columns = columnStore.columns
+                columns.forEach((column) => {
+                    if(column.id === nextColumnId) {
+                        task.columnId = nextColumnId
+                    }
+                })
+            }
+        })
+    }
 
-    return { tasks, createTask, updateTask, deleteTask }
+    return { tasks, createTask, updateTask, deleteTask, nextStepTask, prevStepTask }
 })

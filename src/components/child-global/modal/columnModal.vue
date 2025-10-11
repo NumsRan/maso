@@ -64,6 +64,7 @@
 
     function initUpdateColumn(id) {
         if(
+            id !== '' &&
             newColumnTitle.value.trim().length > 0
         ) {
             columnsStore.updateColumn(id, newColumnTitle.value)
@@ -76,9 +77,9 @@
     function initDeleteColumn(id) {
         if(id !== '') {
             columnsStore.deleteColumn(id)
+            
+            emits('closeModal')
         }
-
-        emits('closeModal')
     }
 </script>
 
