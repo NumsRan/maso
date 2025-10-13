@@ -45,9 +45,6 @@
     // UPDATE COLUMN
     const newColumnTitle = ref('')
 
-    // Get column's data store
-    const columns = columnsStore.columns
-
     // Initialise fields's value with the data getted by the props columnData
     watch(
         () => props.columnData,
