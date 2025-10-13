@@ -20,13 +20,13 @@ We created and used a store named **useColumnStore** for all the data and functi
 
 PS : All data is stored in a array
 
-```
+```Javascript
     import { useColumnStore } from '@/stores/columnStore';
 ```
 
 * Create, Update and Delete a column using **createColumn()**, **updateColumn()** and **deleteColumn()** methods
 
-```
+```Javascript
     export const useColumnStore = defineStore('columnStore', () => {
         let id = 0
 
@@ -60,7 +60,7 @@ To create a column, we get the name of the new column using the **columnName** v
 The store provided by Pinia is stored into the **columnsStore** variable.
 Next, we initialize the column creation functionality by running **initCreateColumn()** when the form is submitted.
 
-```
+```Javascript
     // CREATE COLUMN
     const columnsStore = useColumnStore()
     const columnName = ref('')
