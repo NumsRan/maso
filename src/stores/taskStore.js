@@ -6,6 +6,7 @@ export const useTaskStore = defineStore('taskStore', () => {
     let id = 0
 
     const tasks = ref([])
+    const columnStore = useColumnStore()
 
     const createTask = (columnId, taskName, taskDescription) => {
         tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
@@ -24,8 +25,7 @@ export const useTaskStore = defineStore('taskStore', () => {
         tasks.value = tasks.value.filter(task => task.id !== taskId)
     }
     
-    const columnStore = useColumnStore()
-    
+    // Moving a task to the next or the previous step
     const nextStepTask = (taskId) => {
         tasks.value.forEach((task) => {
             if(task.id === taskId) {
