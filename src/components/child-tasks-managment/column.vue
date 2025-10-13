@@ -45,6 +45,7 @@
 
 <style scoped>
     .column {
+        min-width: 250px;
         width: 250px;
         padding: 8px;
         height: auto;

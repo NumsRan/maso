@@ -36,7 +36,12 @@
 
     .header-action {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
+    }
+
+    .header-action p {
+        margin-bottom: 8px;
     }
 
     div .header-title {
