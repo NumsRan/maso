@@ -1,10 +1,12 @@
 <script setup>
     import Column from '@/components/child-tasks-managment/column.vue';
     import Headers from '@/components/child-tasks-managment/headers.vue';
+    import Toast from '@/components/child-global/toast/toast.vue';
 
 </script>
 
 <template>
+    <Toast/>
     <section class="container">
         <section class="head">
             <Headers/>
