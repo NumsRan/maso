@@ -113,20 +113,28 @@
     }
 
     // MOVE TASK TO THE NEXT STEP
-    function initNextStepTask(id) {
+    function initNextStepTask(id, columnId) {
         if(id !== '') {
-            taskStore.nextStepTask(id)
-
-            emits('closeModal')
+            const isTaskMoved = taskStore.nextStepTask(id)
+            if(isTaskMoved) {
+                columnStore.decreaseTaskCount(columnId)
+                columnStore.increaseTaskCount(columnId + 1)
+                
+                emits('closeModal')
+            }
         }
     }
 
     // MOVE TASK TO THE PREVIOUS STEP
-    function initPreviousStepTask(id) {
+    function initPreviousStepTask(id, columnId) {
         if(id !== '') {
-            taskStore.prevStepTask(id)
-
-            emits('closeModal')
+            const isTaskMoved = taskStore.prevStepTask(id)
+            if(isTaskMoved) {
+                columnStore.decreaseTaskCount(columnId)
+                columnStore.increaseTaskCount(columnId - 1)
+                
+                emits('closeModal')
+            }
         }
     }
 </script>
@@ -163,8 +171,8 @@
                     <textarea class="field description" placeholder="Add some description..." @input="getTaskDescription" :value="taskData.description"></textarea>
                 </div>
                 <div class="modal-control modal-footer">
-                    <Button @click="initPreviousStepTask(taskData.id)" style="background-color: #fefefe;" imgTarget="icon-prev" title="Previous step"/>
-                    <Button @click="initNextStepTask(taskData.id)" style="background-color: #fefefe;" imgTarget="icon-next" title="Next step"/>
+                    <Button @click="initPreviousStepTask(taskData.id, taskData.columnId)" style="background-color: #fefefe;" imgTarget="icon-prev" title="Previous step"/>
+                    <Button @click="initNextStepTask(taskData.id, taskData.columnId)" style="background-color: #fefefe;" imgTarget="icon-next" title="Next step"/>
                 </div>
                 <div class="modal-footer">
                     <Button style="background-color: #4eddcf;" imgTarget="icon-check">

@@ -40,6 +40,7 @@ export const useTaskStore = defineStore('taskStore', () => {
                 })
             }
         })
+        return tasks.value? true : false
     }
     
     const prevStepTask = (taskId) => {
@@ -54,6 +55,7 @@ export const useTaskStore = defineStore('taskStore', () => {
                 })
             }
         })
+        return tasks.value? true : false
     }
 
     return { tasks, createTask, updateTask, deleteTask, nextStepTask, prevStepTask }
