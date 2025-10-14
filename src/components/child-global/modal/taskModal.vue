@@ -41,36 +41,34 @@
 
     // Get columns's data store
     const columnStore = useColumnStore()
-    const columns = columnStore.columns
+
+    // Get correct column id
+    const columnId = ref(null)
+    watch(
+        () => props.columnData,
+        (newValue) => {
+            columnId.value = newValue?.id
+        }
+    )
 
     function initCreateTask() {
         if(
             taskTitle.value.trim().length > 0
         ) {
-            taskStore.createTask(props.columnData.id, taskTitle.value, taskDescription.value.trim().length > 0? taskDescription.value : '...')
+            const isTaskCreated = taskStore.createTask(columnId.value, taskTitle.value, taskDescription.value.trim().length > 0? taskDescription.value : '...')
+            if(isTaskCreated) {
+                columnStore.increaseTaskCount(columnId.value)
 
-            /**
-             * UPDATE column's data
-             * Pinia provide a MutableReactiveHandler so we can directly apply changes on columns's properties here
-             */
-            columns.forEach((column) => {
-                if(column.id === props.columnData.id) {
-                    column.tasksCount++
-                }
-            })
-
-            taskTitle.value = ''
-            taskDescription.value = ''
-            emits('closeModal')
+                taskTitle.value = ''
+                taskDescription.value = ''
+                emits('closeModal')
+            }
         }
     }
 
     // UPDATE TASK
     const newTaskTitle = ref('')
     const newTaskDescription = ref('')
-
-    // Get task's data store
-    const tasks = taskStore.tasks
 
     // Initialise fields's value with the data getted by the props taskData
     watch(
@@ -97,17 +95,20 @@
             newTaskTitle.value.trim().length > 0
         ) {
             taskStore.updateTask(id, newTaskTitle.value, newTaskDescription.value.trim().length > 0? newTaskDescription.value : '...')
-                
+
             emits('closeModal')
         }
     }
 
     // DELETE TASK
-    function initDeleteTask(id) {
+    function initDeleteTask(id, columnId) {
         if(id !== '') {
-            taskStore.deleteTask(id)
-
-            emits('closeModal')
+            const isTaskDeleted = taskStore.deleteTask(id)
+            if(isTaskDeleted) {
+                columnStore.decreaseTaskCount(columnId)
+                
+                emits('closeModal')
+            }
         }
     }
 
@@ -169,7 +170,7 @@
                     <Button style="background-color: #4eddcf;" imgTarget="icon-check">
                         <span class="btn-slot">Update</span>
                     </Button>
-                    <Button @click="initDeleteTask(taskData.id)" imgTarget="icon-delete" style="background-color: #e23b3b;">
+                    <Button @click="initDeleteTask(taskData.id, taskData.columnId)" imgTarget="icon-delete" style="background-color: #e23b3b;">
                         <span class="btn-slot">Delete</span>
                     </Button>
                 </div>

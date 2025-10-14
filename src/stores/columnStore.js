@@ -23,5 +23,21 @@ export const useColumnStore = defineStore('columnStore', () => {
         columns.value = columns.value.filter(column => column.id !== columnId)
     }
 
-    return { columns, createColumn, updateColumn, deleteColumn }
+    const increaseTaskCount = (columnId) => {
+        columns.value.forEach((column) => {
+            if(column.id === columnId) {
+                column.tasksCount = column.tasksCount + 1
+            }
+        })
+    }
+
+    const decreaseTaskCount = (columnId) => {
+        columns.value.forEach((column) => {
+            if(column.id === columnId) {
+                column.tasksCount = column.tasksCount - 1
+            }
+        })
+    }
+
+    return { columns, createColumn, updateColumn, deleteColumn, increaseTaskCount, decreaseTaskCount }
 })

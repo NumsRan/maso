@@ -9,7 +9,8 @@ export const useTaskStore = defineStore('taskStore', () => {
     const columnStore = useColumnStore()
 
     const createTask = (columnId, taskName, taskDescription) => {
-        tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
+        const isTaskCreated = tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
+        return isTaskCreated? true : false
     }
 
     const updateTask = (taskId, newTaskName, newTaskDescription) => {
@@ -23,6 +24,7 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     const deleteTask = (taskId) => {
         tasks.value = tasks.value.filter(task => task.id !== taskId)
+        return tasks.value? true : false
     }
     
     // Moving a task to the next or the previous step
