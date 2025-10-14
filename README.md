@@ -65,6 +65,8 @@ PS : All data is stored in a array
     })
 ```
 
+* We use the **increaseTaskCount()** and **decreaseTaskCount()** methods to increase and decrease the number of tasks corresponding to each column.
+
 In a modal, we call these methods using the following system
 
 ```Javascript
@@ -72,7 +74,7 @@ In a modal, we call these methods using the following system
 ```
 
 Eg. : 
-To create a column, we get the name of the new column using the **columnName** variable and the **v-modal** directive on the input field.
+To create a column, we get the name of the new column using the **columnName** variable and the **v-model** directive on the input field.
 The store provided by Pinia is stored into the **columnsStore** variable.
 Next, we initialize the column creation functionality by running **initCreateColumn()** when the form is submitted.
 
@@ -181,7 +183,7 @@ In a modal, we call these methods using the following system
 ```
 
 Eg. : 
-To create a task, we get the name and the description of the new task using the **taskTitle** and **taskDescription** variables. And then, we aply the **v-modal** directive on each input field.
+To create a task, we get the name and the description of the new task using the **taskTitle** and **taskDescription** variables. And then, we aply the **v-model** directive on each input field.
 The store provided by Pinia is stored into the **taskStore** variable.
 Next, we initialize the task creation functionality by running **initCreateTask()** when the form is submitted.
 
@@ -213,3 +215,69 @@ Next, we initialize the task creation functionality by running **initCreateTask(
         emits('closeModal')
     }
 ```
+
+### Toast
+We've created a toast for the notification system.
+
+All toast configurations are stored in a store called **useToastStore**.
+
+**isShow** to control the state using the **v-if** directive on the template
+**message** informations to display depending on the event
+**color** semantic meaning of the event
+
+```Javascript
+    export const useToastStore  = defineStore('toastStore', () => {
+        /**
+         * @type {isShow: Boolean, message: String}
+         */
+        const toast = ref({isShow: false, message: '', color: ''})
+
+        const toastConfig = (isShow, message, color) => {
+            toast.value.isShow = isShow
+            toast.value.message = message
+            toast.value.color = color
+        }
+
+        return {toast, toastConfig}
+    })
+```
+
+How can we lunch the toast?
+
+1- Import the store
+
+```Javascript
+    import { useToastStore } from '@/stores/toastStore';
+```
+
+2- Initialise color configuration
+
+```Javascript
+    // DATA: used for the toast
+    const toastStore = useToastStore()
+    const info = '#0d6efd'
+    const danger = '#db3545'
+    const success = '#198754'
+``` 
+
+3- Use **lunchNotification()** method
+
+```Javascript
+    // FUNCTION: NOTIFICATION
+    function lunchNotification(isShow, message, type) {
+        // Show notification
+        toastStore.toastConfig(isShow, message, type)
+
+        // Hide notification
+        setTimeout(() => {
+            toastStore.toastConfig(false, '')
+        }, 5000)
+    }
+```
+
+**setTimeout()** automatically hides the toast after 5 seconds
+
+```Javascript
+    lunchNotification(true, `Column created successfully!`, success)
+```
+
