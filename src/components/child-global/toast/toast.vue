@@ -1,26 +1,39 @@
 <script setup>
     import Button from '@/components/child-global/button.vue';
+    import { useToastStore } from '@/stores/toastStore';
 
+    // LUNCH TOAST
+    const props = defineProps({
+        toastData: {
+            type: Object,
+            default: {isShow: false, message: ''}
+        }
+    })
+
+    // Get toast's data from Pinia
+    const toastStore = useToastStore()
 </script>
 
 <template>
-    <div class="toast-container">
-        <div class="toast-header">
-            <div>
-                <img src="@/assets/icons/icon-maso.png" alt="Logo">
-                <p>MASO</p>
+    <transition name="toast">
+        <div v-if="toastData.isShow" class="toast-container">
+            <div class="toast-header">
+                <div>
+                    <img src="@/assets/icons/icon-maso.png" alt="Logo">
+                    <p>MASO</p>
+                </div>
+                <Button @click="toastStore.toastConfig(false, '')" imgTarget="icon-close-toast" style="background-color: #fefefe;"/>
             </div>
-            <Button @click="closeModal" imgTarget="icon-close-toast" style="background-color: #fefefe;"/>
+            <div class="toast-content">
+                <p>{{ toastData.message }}</p>
+            </div>
         </div>
-        <div class="toast-content">
-            <p>Column created successfully!</p>
-        </div>
-    </div>
+    </transition>
 </template>
 
 <style scoped>
     .toast-container {
-        position: absolute;
+        position: fixed;
         right: 10px;
         bottom: 10px;
         width: 300px;
@@ -28,6 +41,36 @@
         border-radius: 5px;
         background-color: #fefefe;
         box-shadow: #bababa 3px 2px 4px;
+    }
+
+    /* SHOW TOAST */
+    .toast-enter-from { 
+        opacity: 0; 
+        transform: translateX(350px); 
+    }
+
+    .toast-enter-active { 
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .toast-enter-to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+
+    /* HIDE TOAT */
+    .toast-leave-from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .toast-leave-active {
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .toast-leave-to {
+        opacity: 0;
+        transform: translateX(350px);
     }
 
     .toast-header,

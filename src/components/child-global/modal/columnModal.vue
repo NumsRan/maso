@@ -2,6 +2,7 @@
     import { ref, watch } from 'vue'
     import Button from '@/components/child-global/button.vue';
     import { useColumnStore } from '@/stores/columnStore';
+    import { useToastStore } from '@/stores/toastStore';
 
     // SIGNAL TO OPEN MODAL
     const props = defineProps({
@@ -23,6 +24,9 @@
         }
     })
 
+    // Get toast's data from Pinia
+    const toastStore = useToastStore()
+
     // SIGNAL TO CLOSE MODAL
     const emits = defineEmits(['closeModal'])
     const closeModal = () => {
@@ -36,7 +40,15 @@
     function initCreateColumn() {
         if(columnName.value.trim().length > 0) {
             columnsStore.createColumn(columnName.value)
-    
+            
+            // Show notification
+            toastStore.toastConfig(true, `Column ${columnName.value.toUpperCase()} created successfully!`)
+
+            // Hide notification
+            setTimeout(() => {
+                toastStore.toastConfig(false, '')
+            }, 5000)
+
             columnName.value = ''
             emits('closeModal')
         }

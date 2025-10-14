@@ -2,11 +2,16 @@
     import Column from '@/components/child-tasks-managment/column.vue';
     import Headers from '@/components/child-tasks-managment/headers.vue';
     import Toast from '@/components/child-global/toast/toast.vue';
+    import { useToastStore } from '@/stores/toastStore';
+
+    // Get toast's data from Pinia
+    const toastStore = useToastStore()
+    const toast = toastStore.toast
 
 </script>
 
 <template>
-    <Toast/>
+    <Toast :toastData="toast"/>
     <section class="container">
         <section class="head">
             <Headers/>
