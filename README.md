@@ -20,10 +20,6 @@ We created and used a store named **useColumnStore** for all the data and functi
 
 PS : All data is stored in a array
 
-```Javascript
-    import { useColumnStore } from '@/stores/columnStore';
-```
-
 * Create, Update and Delete a column using **createColumn()**, **updateColumn()** and **deleteColumn()** methods
 
 ```Javascript
@@ -55,23 +51,34 @@ PS : All data is stored in a array
 
 In a modal, we call these methods using the following system
 
+```Javascript
+    import { useColumnStore } from '@/stores/columnStore';
+```
+
 Eg. : 
 To create a column, we get the name of the new column using the **columnName** variable and the **v-modal** directive on the input field.
 The store provided by Pinia is stored into the **columnsStore** variable.
 Next, we initialize the column creation functionality by running **initCreateColumn()** when the form is submitted.
 
 ```Javascript
-    // CREATE COLUMN
+    // DATA: used for column
     const columnsStore = useColumnStore()
     const columnName = ref('')
 
+    // FUNCTION: CREATE COLUMN
     function initCreateColumn() {
         if(columnName.value.trim().length > 0) {
             columnsStore.createColumn(columnName.value)
-    
+            
+            lunchNotification(true, `Column ${columnName.value.toUpperCase()} created successfully!`, success)
+
             columnName.value = ''
-            emits('closeModal')
         }
+        else {
+            lunchNotification(true, `Please fill out the form!`, info)
+        }
+
+        emits('closeModal')
     }
 ```
 
@@ -79,10 +86,6 @@ Next, we initialize the column creation functionality by running **initCreateCol
 We created and used a store named **useTaskStore** for all the data and functionality of a task
 
 PS : All data is stored in a array
-
-```Javascript
-    import { useTaskStore } from '@/stores/taskStore';
-```
 
 * Create, Update and Delete a task using **createTask()**, **updateTask()** and **deleteTask()** methods
 
@@ -94,7 +97,8 @@ PS : All data is stored in a array
         const columnStore = useColumnStore()
 
         const createTask = (columnId, taskName, taskDescription) => {
-            tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
+            const isTaskCreated = tasks.value.push({id: id++, columnId: columnId, title: taskName, description: taskDescription})
+            return isTaskCreated? true : false
         }
 
         const updateTask = (taskId, newTaskName, newTaskDescription) => {
@@ -108,35 +112,44 @@ PS : All data is stored in a array
 
         const deleteTask = (taskId) => {
             tasks.value = tasks.value.filter(task => task.id !== taskId)
+            return tasks.value? true : false
         }
         
         // Moving a task to the next or the previous step
-        const nextStepTask = (taskId) => {
-            tasks.value.forEach((task) => {
-                if(task.id === taskId) {
-                    const nextColumnId = task.columnId + 1
-                    const columns = columnStore.columns
-                    columns.forEach((column) => {
-                        if(column.id === nextColumnId) {
-                            task.columnId = nextColumnId
-                        }
-                    })
-                }
-            })
+        const nextStepTask = (taskId, columnId) => {
+            const nextColumnId = columnId + 1
+            const columns = columnStore.columns
+            const isNextColumnExist = columns.filter((column) => column.id === nextColumnId).length
+
+            if(isNextColumnExist) {
+                tasks.value.forEach((task) => {
+                    if(task.id === taskId) {               
+                        task.columnId = nextColumnId
+                    }
+                })            
+                return true
+            }
+            else {
+                return false
+            }
         }
         
-        const prevStepTask = (taskId) => {
-            tasks.value.forEach((task) => {
-                if(task.id === taskId) {
-                    const nextColumnId = task.columnId - 1
-                    const columns = columnStore.columns
-                    columns.forEach((column) => {
-                        if(column.id === nextColumnId) {
-                            task.columnId = nextColumnId
-                        }
-                    })
-                }
-            })
+        const prevStepTask = (taskId, columnId) => {
+            const previousColumnId = columnId - 1
+            const columns = columnStore.columns
+            const isPreviousColumnExist = columns.filter((column) => column.id === previousColumnId).length
+
+            if(isPreviousColumnExist) {
+                tasks.value.forEach((task) => {
+                    if(task.id === taskId) {
+                        task.columnId = previousColumnId
+                    }
+                })
+                return true
+            }
+            else {
+                return false
+            }
         }
 
         return { tasks, createTask, updateTask, deleteTask, nextStepTask, prevStepTask }
@@ -146,3 +159,41 @@ PS : All data is stored in a array
 * We move the position of the task using **nextStepTask()** and **prevStepTask()** methods by updating the column id
 
 In a modal, we call these methods using the following system
+
+```Javascript
+    import { useTaskStore } from '@/stores/taskStore';
+```
+
+Eg. : 
+To create a task, we get the name and the description of the new task using the **taskTitle** and **taskDescription** variables. And then, we aply the **v-modal** directive on each input field.
+The store provided by Pinia is stored into the **taskStore** variable.
+Next, we initialize the task creation functionality by running **initCreateTask()** when the form is submitted.
+
+```Javascript
+    // DATA: used for task
+    const taskStore = useTaskStore()
+    const taskTitle = ref('')
+    const taskDescription = ref('')
+
+    // FUNCTION: CREATE TASK
+    function initCreateTask() {
+        if(
+            taskTitle.value.trim().length > 0
+        ) {
+            const isTaskCreated = taskStore.createTask(columnId.value, taskTitle.value, taskDescription.value.trim().length > 0? taskDescription.value : '...')
+            if(isTaskCreated) {
+                columnStore.increaseTaskCount(columnId.value)
+
+                lunchNotification(true, `Task ${taskTitle.value.toUpperCase()} created successfully!`, success)
+
+                taskTitle.value = ''
+                taskDescription.value = ''
+            }
+        }
+        else {
+            lunchNotification(true, `Please fill out the task name!`, info)
+        }
+
+        emits('closeModal')
+    }
+```
