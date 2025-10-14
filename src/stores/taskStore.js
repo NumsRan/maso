@@ -28,34 +28,40 @@ export const useTaskStore = defineStore('taskStore', () => {
     }
     
     // Moving a task to the next or the previous step
-    const nextStepTask = (taskId) => {
-        tasks.value.forEach((task) => {
-            if(task.id === taskId) {
-                const nextColumnId = task.columnId + 1
-                const columns = columnStore.columns
-                columns.forEach((column) => {
-                    if(column.id === nextColumnId) {
-                        task.columnId = nextColumnId
-                    }
-                })
-            }
-        })
-        return tasks.value? true : false
+    const nextStepTask = (taskId, columnId) => {
+        const nextColumnId = columnId + 1
+        const columns = columnStore.columns
+        const isNextColumnExist = columns.filter((column) => column.id === nextColumnId).length
+
+        if(isNextColumnExist) {
+            tasks.value.forEach((task) => {
+                if(task.id === taskId) {               
+                    task.columnId = nextColumnId
+                }
+            })            
+            return true
+        }
+        else {
+            return false
+        }
     }
     
-    const prevStepTask = (taskId) => {
-        tasks.value.forEach((task) => {
-            if(task.id === taskId) {
-                const nextColumnId = task.columnId - 1
-                const columns = columnStore.columns
-                columns.forEach((column) => {
-                    if(column.id === nextColumnId) {
-                        task.columnId = nextColumnId
-                    }
-                })
-            }
-        })
-        return tasks.value? true : false
+    const prevStepTask = (taskId, columnId) => {
+        const previousColumnId = columnId - 1
+        const columns = columnStore.columns
+        const isPreviousColumnExist = columns.filter((column) => column.id === previousColumnId).length
+
+        if(isPreviousColumnExist) {
+            tasks.value.forEach((task) => {
+                if(task.id === taskId) {
+                    task.columnId = previousColumnId
+                }
+            })
+            return true
+        }
+        else {
+            return false
+        }
     }
 
     return { tasks, createTask, updateTask, deleteTask, nextStepTask, prevStepTask }

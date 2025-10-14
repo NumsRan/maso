@@ -108,7 +108,10 @@
             
             lunchNotification(true, `Column deleted successfully!`, danger)
         }
-
+        else {
+            lunchNotification(true, `Column removal error!`, danger)
+        }
+        
         emits('closeModal')
     }
 </script>
