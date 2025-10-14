@@ -6,7 +6,7 @@
     const props = defineProps({
         toastData: {
             type: Object,
-            default: {isShow: false, message: ''}
+            default: {isShow: false, message: '', color: ''}
         }
     })
 
@@ -25,7 +25,7 @@
                 <Button @click="toastStore.toastConfig(false, '')" imgTarget="icon-close-toast" style="background-color: #fefefe;"/>
             </div>
             <div class="toast-content">
-                <p>{{ toastData.message }}</p>
+                <p :style="{color: toastData.color}">{{ toastData.message }}</p>
             </div>
         </div>
     </transition>
@@ -33,6 +33,7 @@
 
 <style scoped>
     .toast-container {
+        z-index: 1000;
         position: fixed;
         right: 10px;
         bottom: 10px;
@@ -58,7 +59,7 @@
         transform: translateX(0); 
     }
 
-    /* HIDE TOAT */
+    /* HIDE TOAST */
     .toast-leave-from {
         opacity: 1;
         transform: translateX(0);

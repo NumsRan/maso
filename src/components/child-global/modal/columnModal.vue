@@ -4,7 +4,7 @@
     import { useColumnStore } from '@/stores/columnStore';
     import { useToastStore } from '@/stores/toastStore';
 
-    // SIGNAL TO OPEN MODAL
+    // DATA: used for the modal
     const props = defineProps({
         showModal: {
             type: Boolean,
@@ -24,40 +24,19 @@
         }
     })
 
-    // Get toast's data from Pinia
+    // DATA: used for the toast
     const toastStore = useToastStore()
+    const info = '#0d6efd'
+    const danger = '#db3545'
+    const success = '#198754'
 
-    // SIGNAL TO CLOSE MODAL
-    const emits = defineEmits(['closeModal'])
-    const closeModal = () => {
-        emits('closeModal')
-    }
-
-    // CREATE COLUMN
+    // DATA: used for column
     const columnsStore = useColumnStore()
     const columnName = ref('')
 
-    function initCreateColumn() {
-        if(columnName.value.trim().length > 0) {
-            columnsStore.createColumn(columnName.value)
-            
-            // Show notification
-            toastStore.toastConfig(true, `Column ${columnName.value.toUpperCase()} created successfully!`)
-
-            // Hide notification
-            setTimeout(() => {
-                toastStore.toastConfig(false, '')
-            }, 5000)
-
-            columnName.value = ''
-            emits('closeModal')
-        }
-    }
-
-    // UPDATE COLUMN
+    
+    // DATA: initialise fields's value with the data getted by the props columnData
     const newColumnTitle = ref('')
-
-    // Initialise fields's value with the data getted by the props columnData
     watch(
         () => props.columnData,
         (newValue) => {
@@ -66,11 +45,46 @@
         { immediate: true }
     )
 
-    // Update fields's value on input event
+    // DATA: update fields's value on input event
     function getColumnTitle(e) {
         newColumnTitle.value = e.target.value
     }
 
+
+    // FUNCTION: NOTIFICATION
+    function lunchNotification(isShow, message, type) {
+        // Show notification
+        toastStore.toastConfig(isShow, message, type)
+
+        // Hide notification
+        setTimeout(() => {
+            toastStore.toastConfig(false, '')
+        }, 5000)
+    }
+
+    // FUNCTION: CLOSE MODAL
+    const emits = defineEmits(['closeModal'])
+    const closeModal = () => {
+        emits('closeModal')
+    }
+
+    // FUNCTION: CREATE COLUMN
+    function initCreateColumn() {
+        if(columnName.value.trim().length > 0) {
+            columnsStore.createColumn(columnName.value)
+            
+            lunchNotification(true, `Column ${columnName.value.toUpperCase()} created successfully!`, success)
+
+            columnName.value = ''
+        }
+        else {
+            lunchNotification(true, `Please fill out the form!`, info)
+        }
+
+        emits('closeModal')
+    }
+
+    // FUNCTION: UPDATE COLUMN
     function initUpdateColumn(id) {
         if(
             id !== '' &&
@@ -78,17 +92,24 @@
         ) {
             columnsStore.updateColumn(id, newColumnTitle.value)
 
-            emits('closeModal')
+            lunchNotification(true, `Column updated successfully!`, success)
         }
+        else {
+            lunchNotification(true, `Please fill out the form!`, info)
+        }
+        
+        emits('closeModal')
     }
 
-    // DELETE COLUMN
+    // FUNCTION: DELETE COLUMN
     function initDeleteColumn(id) {
         if(id !== '') {
             columnsStore.deleteColumn(id)
             
-            emits('closeModal')
+            lunchNotification(true, `Column deleted successfully!`, danger)
         }
+
+        emits('closeModal')
     }
 </script>
 
