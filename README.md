@@ -1,8 +1,8 @@
 # MASO
 A dedicated platform to manage the entire lifecycle of a project, from the first exchanges to the delivery of an application.
 
-## Screeshoot of the application
-![alt text](image.png)
+## Screenshot of the application
+![alt text](readme-screenshot.png)
 
 ## Tools used for
 * vue@3.5.22
@@ -15,7 +15,7 @@ A dedicated platform to manage the entire lifecycle of a project, from the first
 
 We use Pinia as a state management pattern to make data accessible from any component.
 
-### Column's feature
+### Column fonctionnality
 We created and used a store named **useColumnStore** for all the data and functionality of a column
 
 PS : All data is stored in a array
@@ -100,7 +100,7 @@ Next, we initialize the column creation functionality by running **initCreateCol
     }
 ```
 
-### Task's feature
+### Task fonctionnality
 We created and used a store named **useTaskStore** for all the data and functionality of a task
 
 PS : All data is stored in a array
@@ -216,7 +216,7 @@ Next, we initialize the task creation functionality by running **initCreateTask(
     }
 ```
 
-### Toast
+### Toast fonctionnality
 We've created a toast for the notification system.
 
 All toast configurations are stored in a store called **useToastStore**.
@@ -280,4 +280,8 @@ How can we lunch the toast?
 ```Javascript
     lunchNotification(true, `Column created successfully!`, success)
 ```
+
+![alt text](readme-toast.png)
+
+**THIS APPLICATION IS UNDER DEVELOPMENT**
 
