@@ -6,7 +6,7 @@
         }
     })
 
-    const target = "/src/assets/icons/" + props.imgTarget + ".png"
+    const target = "@/assets/icons/" + props.imgTarget + ".png"
 </script>
 
 <template>
