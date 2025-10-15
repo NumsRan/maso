@@ -5,8 +5,8 @@
             default: 'icon-add'
         }
     })
-
-    const target = "@/assets/icons/" + props.imgTarget + ".png"
+    
+    const target = new URL(`/src/assets/icons/${props.imgTarget}.png`, import.meta.url).href
 </script>
 
 <template>
